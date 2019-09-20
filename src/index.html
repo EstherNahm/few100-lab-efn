@@ -3,17 +3,54 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Front End Web 100</title>
+    <title>Front End Web 100 lab</title>
+    <link rel="stylesheet"
+          href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+          crossorigin="anonymous">
 </head>
 
 <body>
-    <header>
-        <h1>Front End Web 100 Starter</h1>
-        <h2>Progressive ITU</h2>
-    </header>
-    <main>
-        
-    </main>
+    <div class="container">
+        <header>
+            <h1>Tip Calculator</h1>
+
+        </header>
+        <main>
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text"
+                          id="basic-addon1">$
+                    </span>
+                </div>
+                <input type="number"
+                       class="form-control"
+                       id="billamount">
+            </div>
+            <div class="btn-group"
+                 role="group"
+                 aria-label="Basic example">
+                <button type="button"
+                        class="btn btn-secondary"
+                        id="button1"
+                        value="10%">10%</button>
+                <button type="button"
+                        class="btn btn-secondary"
+                        id="button2"
+                        value="15%">15%</button>
+                <button type="button"
+                        class="btn btn-secondary"
+                        id="button3"
+                        value="20%">20%</button>
+            </div>
+            <ul class="list-group">
+                <li class="list-group-item">Bill Amount:<span id="billamount1"></span></li>
+                <li class="list-group-item">Tip Percentage:<span id="tipamount"></span></li>
+                <li class="list-group-item">Amount of tip:<span id="amountOfTip"></span></li>
+                <li class="list-group-item">Total to be Paid:<span id="totalBill"></span></li>
+            </ul>
+        </main>
+    </div>
 </body>
 
 </html>
