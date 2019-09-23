@@ -3,10 +3,9 @@ export function calculateTipAmount(a: number, b: number) {
 }
 
 export function calculateTotalBill(a: number, b: number) {
-    console.log(a);
-    console.log(b);
     return a + b;
 }
 
-
-
+export function calculateBillAmountPerPerson(a: number, b: number) {
+    return a / b;
+}
