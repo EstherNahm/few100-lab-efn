@@ -1,10 +1,19 @@
-import { add } from './utils';
+import { calculateTipAmount, calculateTotalBill, calculateBillAmountPerPerson } from './utils';
 
-describe('writing specs in typescript', () => {
-    it('is easy', () => {
-        expect(true).toBe(false);
+describe('calculating tip amount', () => {
+    it('can multiply', () => {
+        expect(calculateTipAmount(100, .10)).toBe(10);
     });
-    it('can add', () => {
-        expect(add(2, 2)).toBe(5);
+});
+
+describe('calculating total bill', () => {
+    it('can add tip to bill', () => {
+        expect(calculateTotalBill(200, 20)).toBe(220);
+    });
+});
+
+describe('calculate cost of bill per person', () => {
+    it('can divide bill by number of people', () => {
+        expect(calculateBillAmountPerPerson(25, 5)).toBe(5);
     });
 });

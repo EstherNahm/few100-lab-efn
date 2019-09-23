@@ -15,7 +15,7 @@ totalbillamountperperson = 0;
 let tipAmounts: number;
 tipAmounts = 0;
 let selectedtippercent: number;
-selectedtippercent = 0;
+selectedtippercent = retrieveLocalStorage();
 let totalbillamount: number;
 totalbillamount = 0;
 let customtip: number;
@@ -32,7 +32,7 @@ tip10.addEventListener('click', function () {
     tip10.disabled = true;
     tip15.disabled = false;
     tip20.disabled = false;
-    selectedtippercent = .10;
+    setTipPercentage(.10);
     updateDisplay();
 });
 
@@ -40,7 +40,7 @@ tip15.addEventListener('click', function () {
     tip15.disabled = true;
     tip20.disabled = false;
     tip10.disabled = false;
-    selectedtippercent = .15;
+    setTipPercentage(.15);
     updateDisplay();
 });
 
@@ -48,13 +48,14 @@ tip20.addEventListener('click', function () {
     tip20.disabled = true;
     tip15.disabled = false;
     tip10.disabled = false;
-    selectedtippercent = .20;
+    setTipPercentage(.2);
     updateDisplay();
 });
 
 customtippercentageinput.addEventListener('keyup', () => {
     customtip = customtippercentageinput.valueAsNumber * .01;
-    selectedtippercent = customtip;
+    setTipPercentage(customtip);
+
     updateDisplay();
 });
 
@@ -65,6 +66,27 @@ totalpeoplecontrol.addEventListener('keyup', () => {
 billamountinputcontrol.addEventListener('keyup', () => {
     updateDisplay();
 });
+
+// sets tippercentage; stores the local in the browser
+function setTipPercentage(a: number) {
+    selectedtippercent = a;
+    window.localStorage.setItem('tippercentage', a.toString());
+}
+
+function retrieveLocalStorage(): number {
+    const previouslyselectedtippercent = window.localStorage.getItem('tippercentage');
+    if (!previouslyselectedtippercent) {
+        return 0;
+    } else {
+        // returns number or undefined
+        const returnval = parseFloat(previouslyselectedtippercent);
+        if (!returnval) {
+            return 0;
+        } else {
+            return returnval;
+        }
+    }
+}
 
 function updateDisplay() {
     if (billamountinputcontrol.valueAsNumber < 0) {
