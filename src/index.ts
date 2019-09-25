@@ -43,19 +43,19 @@ function setcustomtip(customtippercent: number) {
     assigntip(customtip, tipcustom);
 }
 
-tip10.addEventListener('click', function () {
+tip10.addEventListener('click', () => {
     assigntip(.10, tip10);
 });
 
-tip15.addEventListener('click', function () {
+tip15.addEventListener('click', () => {
     assigntip(.15, tip15);
 });
 
-tip20.addEventListener('click', function () {
+tip20.addEventListener('click', () => {
     assigntip(.20, tip20);
 });
 
-tipcustom.addEventListener('click', function () {
+tipcustom.addEventListener('click', () => {
     setcustomtip(customtippercentageinput.valueAsNumber * .01);
 });
 
@@ -117,7 +117,7 @@ function updateDisplay() {
         billamountdisplaycontrol.innerText = '$' + billamount.toString();
         const totalSum = calculateTotalBill(billamount, tipAmounts);
         totalbill.innerText = '$' + totalSum.toFixed(2).toString();
-        amountoftipcontrol.innerText = '$' + tipAmounts.toFixed(2).toString();
+        amountoftipcontrol.innerText = `$${(tipAmounts.toFixed(2))}`;
         tippercentagecontrol.innerText = `${(selectedtippercent * 100).toFixed(0)}%`;
         totalbillamountperperson = calculateBillAmountPerPerson(totalSum, totalpeoplecontrol.valueAsNumber);
     }
