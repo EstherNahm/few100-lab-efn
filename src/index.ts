@@ -37,6 +37,11 @@ function assigntip(tippercentage: number, tipcontrol: HTMLInputElement) {
     setTipPercentage(tippercentage);
     updateDisplay();
 }
+function setcustomtip(customtippercent: number) {
+    customtip = isNaN(customtippercent) ? 0 : customtippercent;
+    customtipbuttondisplay.innerText = (customtip * 100).toFixed(0).toString();
+    assigntip(customtip, tipcustom);
+}
 
 tip10.addEventListener('click', function () {
     assigntip(.10, tip10);
@@ -53,18 +58,6 @@ tip20.addEventListener('click', function () {
 tipcustom.addEventListener('click', function () {
     setcustomtip(customtippercentageinput.valueAsNumber * .01);
 });
-
-function setcustomtip(customtippercent: number) {
-    customtip = isNaN(customtippercent) ? 0 : customtippercent;
-    customtipbuttondisplay.innerText = (customtip * 100).toFixed(0).toString();
-    tipcustom.disabled = true;
-    tip20.disabled = false;
-    tip15.disabled = false;
-    tip10.disabled = false;
-    setTipPercentage(customtip);
-    updateDisplay();
-}
-
 
 customtippercentageinput.addEventListener('keyup', () => {
     setcustomtip(customtippercentageinput.valueAsNumber * .01);
@@ -100,25 +93,22 @@ function retrieveLocalStorage(): number {
     }
 }
 
+function displayErrors(inputcontrol: HTMLInputElement, displaycontrol: HTMLElement) {
+    if (inputcontrol.valueAsNumber < 0) {
+        inputcontrol.classList.add('error');
+        clearDisplay();
+        displaycontrol.innerText = 'ERROR! Number must be greater than 0.';
+        return true;
+    }
+    return false;
+}
+
 function updateDisplay() {
-    if (billamountinputcontrol.valueAsNumber < 0) {
-        billamountinputcontrol.classList.add('error');
-        clearDisplay();
-        billamountdisplaycontrol.innerText = 'ERROR! Number must be greater than 0.';
-        return;
-    }
-    if (totalpeoplecontrol.valueAsNumber < 0) {
-        totalpeoplecontrol.classList.add('error');
-        clearDisplay();
-        totalperperson.innerText = 'ERROR! Number must be greater than 0.';
-        return;
-    }
-    if (customtippercentageinput.valueAsNumber < 0) {
-        customtippercentageinput.classList.add('error');
-        clearDisplay();
-        billamountdisplaycontrol.innerText = 'ERROR! Number must be greater than 0.';
-        return;
-    }
+    const haserrors = (displayErrors(billamountinputcontrol, billamountdisplaycontrol) ||
+        displayErrors(totalpeoplecontrol, totalperperson) ||
+        displayErrors(customtippercentageinput, billamountdisplaycontrol));
+    if (haserrors) { return; }
+
     let billamount = billamountinputcontrol.valueAsNumber;
     if (isNaN(billamount)) {
         billamount = 0;
@@ -149,9 +139,4 @@ function clearDisplay() {
     totalbill.innerText = clearform.toString();
     customtippercentageinput.innerText = clearform.toString();
     totalperperson.innerText = clearform.toString();
-}
-
-function clearCustomTipDisplay() {
-    const clearform = ' ';
-    customtipbuttondisplay.innerText = clearform.toString();
 }
