@@ -8,6 +8,12 @@ const customtippercentageinput = document.getElementById('customtippercentageinp
 const customtipbuttondisplay = document.getElementById('customtipbuttondisplay');
 const totalpeoplecontrol = document.getElementById('totalpeople') as HTMLInputElement;
 const totalperperson = document.getElementById('totalPerPerson') as HTMLSpanElement;
+const tip10 = document.getElementById('button1') as HTMLInputElement;
+const tip15 = document.getElementById('button2') as HTMLInputElement;
+const tip20 = document.getElementById('button3') as HTMLInputElement;
+const tipcustom = document.getElementById('button4') as HTMLInputElement;
+const amountoftipcontrol = document.getElementById('amountOfTip') as HTMLSpanElement;
+const totalbill = document.getElementById('totalBill') as HTMLSpanElement;
 
 let totalperson: number;
 totalperson = 1;
@@ -20,73 +26,48 @@ selectedtippercent = retrieveLocalStorage();
 let totalbillamount: number;
 totalbillamount = 0;
 let customtip: number;
-customtip = 0;
+setcustomtip(selectedtippercent);
 
-const tip10 = document.getElementById('button1') as HTMLInputElement;
-const tip15 = document.getElementById('button2') as HTMLInputElement;
-const tip20 = document.getElementById('button3') as HTMLInputElement;
-const tipcustom = document.getElementById('button4') as HTMLInputElement;
-
-const amountoftipcontrol = document.getElementById('amountOfTip') as HTMLSpanElement;
-const totalbill = document.getElementById('totalBill') as HTMLSpanElement;
-
-tip10.addEventListener('click', function (args: any) {
-    console.log(args);
-    clearCustomTipDisplay();
-    tip10.disabled = true;
+function assigntip(tippercentage: number, tipcontrol: HTMLInputElement) {
+    tip10.disabled = false;
     tip15.disabled = false;
     tip20.disabled = false;
     tipcustom.disabled = false;
-    setTipPercentage(.10);
-
+    tipcontrol.disabled = true;
+    setTipPercentage(tippercentage);
     updateDisplay();
+}
+
+tip10.addEventListener('click', function () {
+    assigntip(.10, tip10);
 });
 
 tip15.addEventListener('click', function () {
-    // clearCustomTipDisplay();
-    tip15.disabled = true;
-    tip20.disabled = false;
-    tip10.disabled = false;
-    tipcustom.disabled = false;
-    setTipPercentage(.15);
-
-    updateDisplay();
+    assigntip(.15, tip15);
 });
 
 tip20.addEventListener('click', function () {
-    // clearCustomTipDisplay();
-    tip20.disabled = true;
-    tip15.disabled = false;
-    tip10.disabled = false;
-    tipcustom.disabled = false;
-    setTipPercentage(.2);
-    updateDisplay();
+    assigntip(.20, tip20);
 });
 
 tipcustom.addEventListener('click', function () {
-    // pull the number out of the text box
-    // use this number to be set to the set tip percentage
-    tipcustom.disabled = true;
-    tip10.disabled = false;
-    tip15.disabled = false;
-    tip20.disabled = false;
-    updateDisplay();
-
+    setcustomtip(customtippercentageinput.valueAsNumber * .01);
 });
 
+function setcustomtip(customtippercent: number) {
+    customtip = isNaN(customtippercent) ? 0 : customtippercent;
+    customtipbuttondisplay.innerText = (customtip * 100).toFixed(0).toString();
+    tipcustom.disabled = true;
+    tip20.disabled = false;
+    tip15.disabled = false;
+    tip10.disabled = false;
+    setTipPercentage(customtip);
+    updateDisplay();
+}
+
+
 customtippercentageinput.addEventListener('keyup', () => {
-    customtip = customtippercentageinput.valueAsNumber * .01;
-    if (isNaN(customtip)) {
-        customtip = 0;
-    } else {
-        customtipbuttondisplay.innerText = (customtip * 100).toString();
-        tipcustom.disabled = true;
-        tip20.disabled = false;
-        tip15.disabled = false;
-        tip10.disabled = false;
-        setTipPercentage(customtip);
-        updateDisplay();
-    }
+    setcustomtip(customtippercentageinput.valueAsNumber * .01);
 });
 
 totalpeoplecontrol.addEventListener('keyup', () => {
@@ -147,7 +128,7 @@ function updateDisplay() {
         const totalSum = calculateTotalBill(billamount, tipAmounts);
         totalbill.innerText = '$' + totalSum.toFixed(2).toString();
         amountoftipcontrol.innerText = '$' + tipAmounts.toFixed(2).toString();
-        tippercentagecontrol.innerText = `${(selectedtippercent * 100).toFixed(2)}%`;
+        tippercentagecontrol.innerText = `${(selectedtippercent * 100).toFixed(0)}%`;
         totalbillamountperperson = calculateBillAmountPerPerson(totalSum, totalpeoplecontrol.valueAsNumber);
     }
     let numberofpeople = totalpeoplecontrol.valueAsNumber;
@@ -159,10 +140,6 @@ function updateDisplay() {
     }
 }
 
-// function clearTotalPerPersonDisplay() {
-//     const clearform = ' ';
-//     totalperperson.innerText = clearform.toString();
-// }
 
 function clearDisplay() {
     const clearform = ' ';
