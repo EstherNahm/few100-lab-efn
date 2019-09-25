@@ -130,13 +130,12 @@ function updateDisplay() {
     }
 }
 
-
 function clearDisplay() {
     const clearform = ' ';
-    billamountdisplaycontrol.innerText = clearform.toString();
-    tippercentagecontrol.innerText = clearform.toString();
-    amountoftipcontrol.innerText = clearform.toString();
-    totalbill.innerText = clearform.toString();
-    customtippercentageinput.innerText = clearform.toString();
-    totalperperson.innerText = clearform.toString();
+    billamountdisplaycontrol.innerText = clearform;
+    tippercentagecontrol.innerText = clearform;
+    amountoftipcontrol.innerText = clearform;
+    totalbill.innerText = clearform;
+    customtippercentageinput.innerText = clearform;
+    totalperperson.innerText = clearform;
 }
